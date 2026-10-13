@@ -1,0 +1,54 @@
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Computer {
+public:
+    string processor;
+    int ram;
+    int storage;
+
+    void showInfo() const {
+        cout << "Processor: " << processor << endl;
+        cout << "RAM: " << ram << " GB" << endl;
+        cout << "Storage: " << storage << " GB" << endl;
+    }
+};
+
+class ComputerBuilder {
+private:
+    Computer computer;
+
+public:
+    ComputerBuilder& setProcessor(const string& p) {
+        computer.processor = p;
+        return *this;
+    }
+
+    ComputerBuilder& setRAM(int r) {
+        computer.ram = r;
+        return *this;
+    }
+
+    ComputerBuilder& setStorage(int s) {
+        computer.storage = s;
+        return *this;
+    }
+
+    Computer build() {
+        return computer;
+    }
+};
+
+int main() {
+    Computer computer = ComputerBuilder()
+        .setProcessor("Intel Core i7")
+        .setRAM(16)
+        .setStorage(512)
+        .build();
+
+    computer.showInfo();
+
+    return 0;
+}

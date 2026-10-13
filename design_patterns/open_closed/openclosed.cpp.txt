@@ -1,0 +1,51 @@
+
+#include <iostream>
+using namespace std;
+
+class Shape {
+public:
+    virtual double area() const = 0;
+    virtual ~Shape() = default;
+};
+
+class Rectangle : public Shape {
+private:
+    double width, height;
+
+public:
+    Rectangle(double w, double h) : width(w), height(h) {}
+
+    double area() const override {
+        return width * height;
+    }
+};
+
+class Circle : public Shape {
+private:
+    double radius;
+
+public:
+    Circle(double r) : radius(r) {}
+
+    double area() const override {
+        return 3.14 * radius * radius;
+    }
+};
+
+class AreaCalculator {
+public:
+    double calculate(const Shape& shape) {
+        return shape.area();
+    }
+};
+
+int main() {
+    Rectangle rectangle(5, 4);
+    Circle circle(3);
+    AreaCalculator calculator;
+
+    cout << "Rectangle area: " << calculator.calculate(rectangle) << endl;
+    cout << "Circle area: " << calculator.calculate(circle) << endl;
+
+    return 0;
+}

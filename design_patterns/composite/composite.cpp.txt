@@ -1,0 +1,59 @@
+
+#include <iostream>
+#include <vector>
+#include <memory>
+#include <string>
+using namespace std;
+
+class FileSystemComponent {
+public:
+    virtual void show(int indent = 0) const = 0;
+    virtual ~FileSystemComponent() = default;
+};
+
+class File : public FileSystemComponent {
+private:
+    string name;
+
+public:
+    File(const string& n) : name(n) {}
+
+    void show(int indent = 0) const override {
+        cout << string(indent, ' ') << "File: " << name << endl;
+    }
+};
+
+class Folder : public FileSystemComponent {
+private:
+    string name;
+    vector<shared_ptr<FileSystemComponent>> children;
+
+public:
+    Folder(const string& n) : name(n) {}
+
+    void add(shared_ptr<FileSystemComponent> component) {
+        children.push_back(component);
+    }
+
+    void show(int indent = 0) const override {
+        cout << string(indent, ' ') << "Folder: " << name << endl;
+
+        for (const auto& child : children) {
+            child->show(indent + 4);
+        }
+    }
+};
+
+int main() {
+    auto root = make_shared<Folder>("Documents");
+    auto subFolder = make_shared<Folder>("University");
+
+    root->add(make_shared<File>("notes.txt"));
+    subFolder->add(make_shared<File>("homework.cpp"));
+    subFolder->add(make_shared<File>("project.cpp"));
+
+    root->add(subFolder);
+    root->show();
+
+    return 0;
+}

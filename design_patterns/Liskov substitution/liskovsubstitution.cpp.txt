@@ -1,0 +1,53 @@
+
+#include <iostream>
+using namespace std;
+
+class Bird {
+public:
+    virtual void eat() {
+        cout << "Bird is eating" << endl;
+    }
+
+    virtual ~Bird() = default;
+};
+
+class FlyingBird : public Bird {
+public:
+    virtual void fly() {
+        cout << "Bird is flying" << endl;
+    }
+};
+
+class Sparrow : public FlyingBird {
+public:
+    void eat() override {
+        cout << "Sparrow is eating" << endl;
+    }
+
+    void fly() override {
+        cout << "Sparrow is flying" << endl;
+    }
+};
+
+class Penguin : public Bird {
+public:
+    void eat() override {
+        cout << "Penguin is eating" << endl;
+    }
+};
+
+void feedBird(Bird& bird) {
+    bird.eat();
+}
+
+int main() {
+    Sparrow sparrow;
+    Penguin penguin;
+
+    feedBird(sparrow);
+    feedBird(penguin);
+
+    sparrow.fly();
+
+    return 0;
+}

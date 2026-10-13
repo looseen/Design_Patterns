@@ -1,0 +1,47 @@
+
+#include <iostream>
+using namespace std;
+
+class MessageSender {
+public:
+    virtual void sendMessage() = 0;
+    virtual ~MessageSender() = default;
+};
+
+class EmailSender : public MessageSender {
+public:
+    void sendMessage() override {
+        cout << "Sending email message" << endl;
+    }
+};
+
+class SMSSender : public MessageSender {
+public:
+    void sendMessage() override {
+        cout << "Sending SMS message" << endl;
+    }
+};
+
+class Notification {
+private:
+    MessageSender& sender;
+
+public:
+    Notification(MessageSender& s) : sender(s) {}
+
+    void notify() {
+        sender.sendMessage();
+    }
+};
+
+int main() {
+    EmailSender email;
+    Notification emailNotification(email);
+    emailNotification.notify();
+
+    SMSSender sms;
+    Notification smsNotification(sms);
+    smsNotification.notify();
+
+    return 0;
+}

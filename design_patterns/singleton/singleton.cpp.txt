@@ -1,0 +1,36 @@
+
+#include <iostream>
+using namespace std;
+
+class Database {
+private:
+    Database() {
+        cout << "Database instance created" << endl;
+    }
+
+public:
+    Database(const Database&) = delete;
+    Database& operator=(const Database&) = delete;
+
+    static Database& getInstance() {
+        static Database instance;
+        return instance;
+    }
+
+    void connect() {
+        cout << "Connected to database" << endl;
+    }
+};
+
+int main() {
+    Database& db1 = Database::getInstance();
+    db1.connect();
+
+    Database& db2 = Database::getInstance();
+    db2.connect();
+
+    cout << "Same instance: "
+         << (&db1 == &db2 ? "Yes" : "No") << endl;
+
+    return 0;
+}

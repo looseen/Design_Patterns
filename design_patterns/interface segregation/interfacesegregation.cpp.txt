@@ -1,0 +1,44 @@
+
+#include <iostream>
+using namespace std;
+
+class Printer {
+public:
+    virtual void print() = 0;
+    virtual ~Printer() = default;
+};
+
+class Scanner {
+public:
+    virtual void scan() = 0;
+    virtual ~Scanner() = default;
+};
+
+class SimplePrinter : public Printer {
+public:
+    void print() override {
+        cout << "Printing document" << endl;
+    }
+};
+
+class MultiFunctionPrinter : public Printer, public Scanner {
+public:
+    void print() override {
+        cout << "Printing document" << endl;
+    }
+
+    void scan() override {
+        cout << "Scanning document" << endl;
+    }
+};
+
+int main() {
+    SimplePrinter simplePrinter;
+    MultiFunctionPrinter multiPrinter;
+
+    simplePrinter.print();
+    multiPrinter.print();
+    multiPrinter.scan();
+
+    return 0;
+}

@@ -1,0 +1,50 @@
+
+#include <iostream>
+#include <memory>
+#include <string>
+using namespace std;
+
+class Transport {
+public:
+    virtual void deliver() = 0;
+    virtual ~Transport() = default;
+};
+
+class Car : public Transport {
+public:
+    void deliver() override {
+        cout << "Delivering by car" << endl;
+    }
+};
+
+class Ship : public Transport {
+public:
+    void deliver() override {
+        cout << "Delivering by ship" << endl;
+    }
+};
+
+class TransportFactory {
+public:
+    static unique_ptr<Transport> createTransport(const string& type) {
+        if (type == "car") {
+            return make_unique<Car>();
+        }
+
+        if (type == "ship") {
+            return make_unique<Ship>();
+        }
+
+        return nullptr;
+    }
+};
+
+int main() {
+    unique_ptr<Transport> car = TransportFactory::createTransport("car");
+    unique_ptr<Transport> ship = TransportFactory::createTransport("ship");
+
+    if (car) car->deliver();
+    if (ship) ship->deliver();
+
+    return 0;
+}

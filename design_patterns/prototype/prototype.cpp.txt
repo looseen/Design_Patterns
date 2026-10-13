@@ -1,0 +1,34 @@
+
+#include <iostream>
+#include <string>
+#include <memory>
+using namespace std;
+
+class Document {
+public:
+    string title;
+    string content;
+
+    Document(const string& t, const string& c)
+        : title(t), content(c) {}
+
+    unique_ptr<Document> clone() const {
+        return make_unique<Document>(*this);
+    }
+
+    void show() const {
+        cout << "Title: " << title << endl;
+        cout << "Content: " << content << endl;
+    }
+};
+
+int main() {
+    Document original("My Document", "Design Patterns in C++");
+    unique_ptr<Document> copy = original.clone();
+
+    original.show();
+    cout << "--- Copy ---" << endl;
+    copy->show();
+
+    return 0;
+}
